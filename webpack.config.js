@@ -1,12 +1,13 @@
 module.exports = {
-	entry: './app/app.js',
+	entry: './app/index.js',
 	output: {
 		path: __dirname,
 		filename: './public/bundle.js' 
 	},
 	resolve: {
 		root: __dirname,
-		alias: { },
+		alias: {
+		},
 		extensions: ['', '.js']
 	},
 	module: {

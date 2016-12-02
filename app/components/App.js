@@ -10,7 +10,7 @@ class App extends React.Component {
 		return(
 			<div>
 				<Nav/>
-				<h1>App</h1>
+				<h1>Weather App</h1>
 				{this.props.children}
 			</div>
 		);

@@ -6,28 +6,45 @@ import openWeatherMap from '../api/openWeatherMap';
 class Weather extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { location: 'New York', temp: 0 };
+		this.state = { 
+			isLoading: false
+		};
+
 		this.handleSearch = this.handleSearch.bind(this);
 	}
 
 	handleSearch(location){	
 		var self = this;
+		this.setState({ isLoading: true });
+
 		openWeatherMap.getTemperature(location)
 			.then(function(temperature) {
 				self.setState({ 
 					location: location, 
-					temp: temperature 
+					temp: temperature,
+					isLoading: false
 				});
 			}, function(error) {
-				console.log("Error: ", error);
+				self.setState({ isLoading: false });
+				alert(error);
 			});
 	}
 
 	render(){
+		var { isLoading, location, temp } = this.state;
+
+		function renderMessage(){
+			if(isLoading){
+				return <h3>Fetching weather...</h3>;
+			} else if(temp && location) {
+				return <WeatherMessage location={location} temp={temp} />
+			}
+		}
+
 		return(
 			<div>
 				<WeatherForm handleSearch={this.handleSearch} />
-				<WeatherMessage location={this.state.location} temp={this.state.temp} />
+				{renderMessage()}
 			</div>
 		);
 	}

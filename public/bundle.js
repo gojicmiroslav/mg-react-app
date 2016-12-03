@@ -26543,7 +26543,10 @@
 
 			var _this = _possibleConstructorReturn(this, (Weather.__proto__ || Object.getPrototypeOf(Weather)).call(this, props));
 
-			_this.state = { location: 'New York', temp: 0 };
+			_this.state = {
+				isLoading: false
+			};
+
 			_this.handleSearch = _this.handleSearch.bind(_this);
 			return _this;
 		}
@@ -26552,23 +26555,45 @@
 			key: 'handleSearch',
 			value: function handleSearch(location) {
 				var self = this;
+				this.setState({ isLoading: true });
+
 				_openWeatherMap2.default.getTemperature(location).then(function (temperature) {
 					self.setState({
 						location: location,
-						temp: temperature
+						temp: temperature,
+						isLoading: false
 					});
 				}, function (error) {
-					console.log("Error: ", error);
+					self.setState({ isLoading: false });
+					alert(error);
 				});
 			}
 		}, {
 			key: 'render',
 			value: function render() {
+				var _state = this.state,
+				    isLoading = _state.isLoading,
+				    location = _state.location,
+				    temp = _state.temp;
+
+
+				function renderMessage() {
+					if (isLoading) {
+						return _react2.default.createElement(
+							'h3',
+							null,
+							'Fetching weather...'
+						);
+					} else if (temp && location) {
+						return _react2.default.createElement(_WeatherMessage2.default, { location: location, temp: temp });
+					}
+				}
+
 				return _react2.default.createElement(
 					'div',
 					null,
 					_react2.default.createElement(_WeatherForm2.default, { handleSearch: this.handleSearch }),
-					_react2.default.createElement(_WeatherMessage2.default, { location: this.state.location, temp: this.state.temp })
+					renderMessage()
 				);
 			}
 		}]);
@@ -26697,7 +26722,7 @@
 	var axios = __webpack_require__(239);
 
 	var API_KEY = '594accddf05910c32d4da39898ba71e8';
-	var OPEN_WEATHER_MAP_URL = '//api.openweathermap.org/data/2.5/weather?appid=' + API_KEY + '&units=metric';
+	var OPEN_WEATHER_MAP_URL = 'http://api.openweathermap.org/data/2.5/weather?appid=' + API_KEY + '&units=metric';
 
 	var getTemperature = function getTemperature(location) {
 		var encodedLocation = encodeURIComponent(location);
@@ -26705,7 +26730,7 @@
 
 		return axios.get(requestUrl).then(function (res) {
 			//success
-			if (res.status !== 200 && res.statusText !== 'OK') {
+			if (res.data.cod && res.data.message) {
 				throw new Error(res.response.data.message);
 			} else {
 				return res.data.main.temp;

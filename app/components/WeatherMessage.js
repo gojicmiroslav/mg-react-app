@@ -1,8 +1,8 @@
 import React from 'react';
 
-const WeatherMessage = (props) => {
+const WeatherMessage = ({ temp, location }) => {
 	return (
-		<h2>It is it {props.temp} in {props.location}.</h2>
+		<h2>It is it {temp} in {location}.</h2>
 	);
 };
 

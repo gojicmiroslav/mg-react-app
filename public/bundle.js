@@ -26697,7 +26697,7 @@
 	var axios = __webpack_require__(239);
 
 	var API_KEY = '594accddf05910c32d4da39898ba71e8';
-	var OPEN_WEATHER_MAP_URL = 'http://api.openweathermap.org/data/2.5/weather?appid=' + API_KEY + '&units=metric';
+	var OPEN_WEATHER_MAP_URL = 'https://api.openweathermap.org/data/2.5/weather?appid=' + API_KEY + '&units=metric';
 
 	var getTemperature = function getTemperature(location) {
 		var encodedLocation = encodeURIComponent(location);

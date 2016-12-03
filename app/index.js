@@ -6,6 +6,9 @@ import Weather from './components/Weather';
 import About from './components/About';
 import Contact from './components/Contact';
 
+//Load bootstrap
+require('style!css!bootstrap/dist/css/bootstrap.min.css');
+
 ReactDOM.render(
 	<Router history={hashHistory}>
 		<Route path="/" component={App} >

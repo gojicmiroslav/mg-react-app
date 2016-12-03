@@ -16,7 +16,6 @@
   "dependencies": {
     "axios": "^0.15.3",
     "express": "^4.14.0",
-    "heroku-ssl-redirect": "0.0.3",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-router": "^3.0.0"

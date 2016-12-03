@@ -2,7 +2,7 @@
 var axios = require('axios');
 
 const API_KEY = '594accddf05910c32d4da39898ba71e8';
-const OPEN_WEATHER_MAP_URL = `http://api.openweathermap.org/data/2.5/weather?appid=${API_KEY}&units=metric`;
+const OPEN_WEATHER_MAP_URL = `//api.openweathermap.org/data/2.5/weather?appid=${API_KEY}&units=metric`;
 
 const getTemperature = (location) => {
 	var encodedLocation = encodeURIComponent(location);

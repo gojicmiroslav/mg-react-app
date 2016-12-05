@@ -3,13 +3,13 @@ import WeatherForm from './WeatherForm';
 import WeatherMessage from './WeatherMessage';
 import openWeatherMap from '../api/openWeatherMap';
 import WeatherNav from './WeatherNav';
+import ErrorModal from './ErrorModal';
 
 class Weather extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { 
-			isLoading: false,
-			isEmpty: false
+			isLoading: false
 		};
 
 		this.handleSearch = this.handleSearch.bind(this);
@@ -17,11 +17,7 @@ class Weather extends React.Component {
 
 	handleSearch(location){	
 		var self = this;
-		this.setState({ isLoading: true });
-
-		if(location.length < 0) {
-			this.setState({ isLoading: false, isEmpty: true });
-		} else {
+		this.setState({ isLoading: true, errorMessage: undefined });
 
 		openWeatherMap.getTemperature(location)
 			.then(function(temperature) {
@@ -31,14 +27,12 @@ class Weather extends React.Component {
 					isLoading: false
 				});
 			}, function(error) {
-				self.setState({ isLoading: false });
-				alert(error);
+				self.setState({ isLoading: false, errorMessage: error.message });
 			});
-		}
 	}
 
 	render(){
-		var { isLoading, isEmpty, location, temp } = this.state;
+		var { isLoading, location, temp, errorMessage } = this.state;
 
 		function renderMessage(){
 			if(isLoading){
@@ -47,14 +41,14 @@ class Weather extends React.Component {
   						<h3>Fetching weather...</h3>
 					</div>
 				);
-			} else if(isEmpty){
-				return (
-					<div className="alert alert-info margin-top-30" role="alert">
-						<h3>Please enter a city name...</h3>
-					</div>
-				);
 			} else if(temp && location) {
 				return <WeatherMessage location={location} temp={temp} />
+			} 
+		}
+
+		function renderErrorMessage(){
+			if(typeof errorMessage === 'string'){
+				return <ErrorModal message={errorMessage} />;
 			}
 		}
 
@@ -66,7 +60,8 @@ class Weather extends React.Component {
     					<h2 className="card-title">Weather Application API</h2>
     					
 						<WeatherForm handleSearch={this.handleSearch} />
-						{renderMessage()}
+						{ renderMessage() }
+						{ renderErrorMessage() }
 					</div>
 				</div>
 			</div>

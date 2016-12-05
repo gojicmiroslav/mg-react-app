@@ -26492,11 +26492,18 @@
 					null,
 					_react2.default.createElement(_Nav2.default, null),
 					_react2.default.createElement(
-						'h1',
-						null,
-						'Weather App'
-					),
-					this.props.children
+						'div',
+						{ className: 'container' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'row' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-md-10 col-lg-8 col-sm-10 offset-md-1 offset-lg-2 offset-sm-1' },
+								this.props.children
+							)
+						)
+					)
 				);
 			}
 		}]);
@@ -26665,7 +26672,8 @@
 			var _this = _possibleConstructorReturn(this, (Weather.__proto__ || Object.getPrototypeOf(Weather)).call(this, props));
 
 			_this.state = {
-				isLoading: false
+				isLoading: false,
+				isEmpty: false
 			};
 
 			_this.handleSearch = _this.handleSearch.bind(_this);
@@ -26678,22 +26686,28 @@
 				var self = this;
 				this.setState({ isLoading: true });
 
-				_openWeatherMap2.default.getTemperature(location).then(function (temperature) {
-					self.setState({
-						location: location,
-						temp: temperature,
-						isLoading: false
+				if (location.length < 0) {
+					this.setState({ isLoading: false, isEmpty: true });
+				} else {
+
+					_openWeatherMap2.default.getTemperature(location).then(function (temperature) {
+						self.setState({
+							location: location,
+							temp: temperature,
+							isLoading: false
+						});
+					}, function (error) {
+						self.setState({ isLoading: false });
+						alert(error);
 					});
-				}, function (error) {
-					self.setState({ isLoading: false });
-					alert(error);
-				});
+				}
 			}
 		}, {
 			key: 'render',
 			value: function render() {
 				var _state = this.state,
 				    isLoading = _state.isLoading,
+				    isEmpty = _state.isEmpty,
 				    location = _state.location,
 				    temp = _state.temp;
 
@@ -26701,9 +26715,23 @@
 				function renderMessage() {
 					if (isLoading) {
 						return _react2.default.createElement(
-							'h3',
-							null,
-							'Fetching weather...'
+							'div',
+							{ className: 'alert alert-info margin-top-30', role: 'alert' },
+							_react2.default.createElement(
+								'h3',
+								null,
+								'Fetching weather...'
+							)
+						);
+					} else if (isEmpty) {
+						return _react2.default.createElement(
+							'div',
+							{ className: 'alert alert-info margin-top-30', role: 'alert' },
+							_react2.default.createElement(
+								'h3',
+								null,
+								'Please enter a city name...'
+							)
 						);
 					} else if (temp && location) {
 						return _react2.default.createElement(_WeatherMessage2.default, { location: location, temp: temp });
@@ -26712,9 +26740,48 @@
 
 				return _react2.default.createElement(
 					'div',
-					null,
-					_react2.default.createElement(_WeatherForm2.default, { handleSearch: this.handleSearch }),
-					renderMessage()
+					{ className: 'starter-template' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'card text-xs-center' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'card-header' },
+							_react2.default.createElement(
+								'ul',
+								{ className: 'nav nav-tabs card-header-tabs float-xs-left' },
+								_react2.default.createElement(
+									'li',
+									{ className: 'nav-item' },
+									_react2.default.createElement(
+										'a',
+										{ className: 'nav-link active', href: '#' },
+										'Weather App'
+									)
+								),
+								_react2.default.createElement(
+									'li',
+									{ className: 'nav-item' },
+									_react2.default.createElement(
+										'a',
+										{ className: 'nav-link', href: '#' },
+										'City Examples'
+									)
+								)
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'card-block' },
+							_react2.default.createElement(
+								'h2',
+								{ className: 'card-title' },
+								'Weather Application API'
+							),
+							_react2.default.createElement(_WeatherForm2.default, { handleSearch: this.handleSearch }),
+							renderMessage()
+						)
+					)
 				);
 			}
 		}]);
@@ -26769,8 +26836,8 @@
 				var location = this.refs.location.value;
 
 				if (location.length > 0) {
-					this.refs.location.value = '';
 					this.props.handleSearch(location);
+					this.refs.location.value = '';
 				}
 			}
 		}, {
@@ -26778,15 +26845,23 @@
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
-					null,
+					{ className: 'margin-top-30' },
 					_react2.default.createElement(
 						'form',
 						{ onSubmit: this.onFormSubmit },
-						_react2.default.createElement('input', { type: 'text', ref: 'location' }),
 						_react2.default.createElement(
-							'button',
-							{ type: 'submit' },
-							'Get Weather'
+							'div',
+							{ className: 'input-group input-group-lg' },
+							_react2.default.createElement('input', { type: 'text', ref: 'location', className: 'form-control', placeholder: 'Enter a city name...' }),
+							_react2.default.createElement(
+								'span',
+								{ className: 'input-group-btn' },
+								_react2.default.createElement(
+									'button',
+									{ type: 'submit', className: 'btn btn-primary' },
+									'Get Weather'
+								)
+							)
 						)
 					)
 				);
@@ -26804,7 +26879,7 @@
 /* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -26821,13 +26896,24 @@
 		    location = _ref.location;
 
 		return _react2.default.createElement(
-			'h2',
-			null,
-			'It is it ',
-			temp,
-			' in ',
-			location,
-			'.'
+			"div",
+			{ className: "alert alert-success margin-top-30", role: "alert" },
+			_react2.default.createElement(
+				"h3",
+				null,
+				"It is it ",
+				_react2.default.createElement(
+					"i",
+					null,
+					temp
+				),
+				" in ",
+				_react2.default.createElement(
+					"i",
+					null,
+					location
+				)
+			)
 		);
 	};
 
@@ -28360,7 +28446,7 @@
 /* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -28374,9 +28460,13 @@
 
 	var About = function About(props) {
 		return _react2.default.createElement(
-			'h2',
-			null,
-			'About'
+			"div",
+			{ className: "card-block" },
+			_react2.default.createElement(
+				"h2",
+				{ className: "card-title" },
+				"About Page"
+			)
 		);
 	};
 
@@ -28386,7 +28476,7 @@
 /* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -28400,9 +28490,18 @@
 
 	var Contact = function Contact() {
 		return _react2.default.createElement(
-			'h2',
-			null,
-			'Contact: miroslav.gojic.78@gmail.com'
+			"div",
+			{ className: "card-block" },
+			_react2.default.createElement(
+				"h4",
+				{ className: "card-title" },
+				"Contact: ",
+				_react2.default.createElement(
+					"a",
+					{ href: "mailto:miroslav.gojic.78@gmail.com" },
+					" miroslav.gojic.78@gmail.com"
+				)
+			)
 		);
 	};
 

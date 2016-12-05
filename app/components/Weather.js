@@ -7,7 +7,8 @@ class Weather extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { 
-			isLoading: false
+			isLoading: false,
+			isEmpty: false
 		};
 
 		this.handleSearch = this.handleSearch.bind(this);
@@ -16,6 +17,10 @@ class Weather extends React.Component {
 	handleSearch(location){	
 		var self = this;
 		this.setState({ isLoading: true });
+
+		if(location.length < 0) {
+			this.setState({ isLoading: false, isEmpty: true });
+		} else {
 
 		openWeatherMap.getTemperature(location)
 			.then(function(temperature) {
@@ -28,23 +33,50 @@ class Weather extends React.Component {
 				self.setState({ isLoading: false });
 				alert(error);
 			});
+		}
 	}
 
 	render(){
-		var { isLoading, location, temp } = this.state;
+		var { isLoading, isEmpty, location, temp } = this.state;
 
 		function renderMessage(){
 			if(isLoading){
-				return <h3>Fetching weather...</h3>;
+				return (
+					<div className="alert alert-info margin-top-30" role="alert">
+  						<h3>Fetching weather...</h3>
+					</div>
+				);
+			} else if(isEmpty){
+				return (
+					<div className="alert alert-info margin-top-30" role="alert">
+						<h3>Please enter a city name...</h3>
+					</div>
+				);
 			} else if(temp && location) {
 				return <WeatherMessage location={location} temp={temp} />
 			}
 		}
 
 		return(
-			<div>
-				<WeatherForm handleSearch={this.handleSearch} />
-				{renderMessage()}
+			<div className="starter-template">				
+				<div className="card text-xs-center">
+  					<div className="card-header">
+    					<ul className="nav nav-tabs card-header-tabs float-xs-left">
+      						<li className="nav-item">
+        						<a className="nav-link active" href="#">Weather App</a>
+      						</li>
+      						<li className="nav-item">
+        						<a className="nav-link" href="#">City Examples</a>
+      						</li>
+    					</ul>
+  					</div>
+  					<div className="card-block">
+    					<h2 className="card-title">Weather Application API</h2>
+    					
+						<WeatherForm handleSearch={this.handleSearch} />
+						{renderMessage()}
+					</div>
+				</div>
 			</div>
 		);
 	}

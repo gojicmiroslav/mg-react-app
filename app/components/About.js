@@ -2,7 +2,9 @@ import React from 'react';
 
 const About = (props) => {
 	return(
-		<h2>About</h2>
+		<div className="card-block">
+			<h2 className="card-title">About Page</h2>
+		</div>
 	);
 };
 

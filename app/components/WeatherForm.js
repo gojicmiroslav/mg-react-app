@@ -11,17 +11,21 @@ class WeatherForm extends React.Component {
 		var location = this.refs.location.value;
 
 		if(location.length > 0) {
-			this.refs.location.value = '';	
 			this.props.handleSearch(location);
-		}
+			this.refs.location.value = '';	
+		} 
 	}
 
 	render(){
 		return (
-			<div>
+			<div className="margin-top-30">
 				<form onSubmit={this.onFormSubmit}>
-					<input type="text" ref="location" />
-					<button type="submit">Get Weather</button>
+					<div className="input-group input-group-lg">
+						<input type="text" ref="location" className="form-control" placeholder="Enter a city name..." />	
+						<span className="input-group-btn">
+        					<button type="submit" className="btn btn-primary">Get Weather</button>
+      					</span>
+					</div>
 				</form>
 			</div>
 		);

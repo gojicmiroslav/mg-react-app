@@ -2,7 +2,9 @@ import React from 'react';
 
 const WeatherMessage = ({ temp, location }) => {
 	return (
-		<h2>It is it {temp} in {location}.</h2>
+		<div className="alert alert-success margin-top-30" role="alert">
+  			<h3>It is it <i>{temp}</i> in <i>{location}</i></h3>
+		</div>
 	);
 };
 

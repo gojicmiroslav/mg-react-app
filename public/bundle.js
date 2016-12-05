@@ -121,6 +121,10 @@
 
 	var _Contact2 = _interopRequireDefault(_Contact);
 
+	var _Examples = __webpack_require__(272);
+
+	var _Examples2 = _interopRequireDefault(_Examples);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	_reactDom2.default.render(_react2.default.createElement(
@@ -131,7 +135,8 @@
 			{ path: '/', component: _App2.default },
 			_react2.default.createElement(_reactRouter.IndexRoute, { component: _Weather2.default }),
 			_react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default }),
-			_react2.default.createElement(_reactRouter.Route, { path: '/contact', component: _Contact2.default })
+			_react2.default.createElement(_reactRouter.Route, { path: '/contact', component: _Contact2.default }),
+			_react2.default.createElement(_reactRouter.Route, { path: '/examples', component: _Examples2.default })
 		)
 	), document.getElementById("app"));
 
@@ -26655,6 +26660,10 @@
 
 	var _openWeatherMap2 = _interopRequireDefault(_openWeatherMap);
 
+	var _WeatherNav = __webpack_require__(273);
+
+	var _WeatherNav2 = _interopRequireDefault(_WeatherNav);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26744,32 +26753,7 @@
 					_react2.default.createElement(
 						'div',
 						{ className: 'card text-xs-center' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'card-header' },
-							_react2.default.createElement(
-								'ul',
-								{ className: 'nav nav-tabs card-header-tabs float-xs-left' },
-								_react2.default.createElement(
-									'li',
-									{ className: 'nav-item' },
-									_react2.default.createElement(
-										'a',
-										{ className: 'nav-link active', href: '#' },
-										'Weather App'
-									)
-								),
-								_react2.default.createElement(
-									'li',
-									{ className: 'nav-item' },
-									_react2.default.createElement(
-										'a',
-										{ className: 'nav-link', href: '#' },
-										'City Examples'
-									)
-								)
-							)
-						),
+						_react2.default.createElement(_WeatherNav2.default, null),
 						_react2.default.createElement(
 							'div',
 							{ className: 'card-block' },
@@ -28506,6 +28490,171 @@
 	};
 
 	exports.default = Contact;
+
+/***/ },
+/* 272 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(7);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _WeatherNav = __webpack_require__(273);
+
+	var _WeatherNav2 = _interopRequireDefault(_WeatherNav);
+
+	var _reactRouter = __webpack_require__(184);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Examples = function (_React$Component) {
+		_inherits(Examples, _React$Component);
+
+		function Examples() {
+			_classCallCheck(this, Examples);
+
+			return _possibleConstructorReturn(this, (Examples.__proto__ || Object.getPrototypeOf(Examples)).apply(this, arguments));
+		}
+
+		_createClass(Examples, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'starter-template' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'card text-xs-center' },
+						_react2.default.createElement(_WeatherNav2.default, null),
+						_react2.default.createElement(
+							'div',
+							{ className: 'card-block' },
+							_react2.default.createElement(
+								'h2',
+								{ className: '' },
+								'Examples'
+							),
+							_react2.default.createElement(
+								'p',
+								{ className: 'card-text' },
+								'Here are a few example to locations try out!'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'list-group' },
+								_react2.default.createElement(
+									_reactRouter.Link,
+									{
+										to: '/?location=Chicago',
+										className: 'list-group-item list-group-item-action',
+										activeClassName: 'list-group-item active' },
+									'Chicago, USA'
+								),
+								_react2.default.createElement(
+									_reactRouter.Link,
+									{
+										to: '/?location=Belgrade',
+										className: 'list-group-item list-group-item-action',
+										activeClassName: 'list-group-item active' },
+									'Belgrade, Serbia'
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return Examples;
+	}(_react2.default.Component);
+
+	exports.default = Examples;
+
+/***/ },
+/* 273 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(7);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(184);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var WeatherNav = function (_React$Component) {
+		_inherits(WeatherNav, _React$Component);
+
+		function WeatherNav() {
+			_classCallCheck(this, WeatherNav);
+
+			return _possibleConstructorReturn(this, (WeatherNav.__proto__ || Object.getPrototypeOf(WeatherNav)).apply(this, arguments));
+		}
+
+		_createClass(WeatherNav, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'card-header' },
+					_react2.default.createElement(
+						'ul',
+						{ className: 'nav nav-tabs card-header-tabs float-xs-left' },
+						_react2.default.createElement(
+							'li',
+							{ className: 'nav-item' },
+							_react2.default.createElement(
+								_reactRouter.IndexLink,
+								{ to: '/', activeClassName: 'active', className: 'nav-link' },
+								'Weather App'
+							)
+						),
+						_react2.default.createElement(
+							'li',
+							{ className: 'nav-item' },
+							_react2.default.createElement(
+								_reactRouter.Link,
+								{ to: '/examples', activeClassName: 'active', className: 'nav-link' },
+								'City Examples'
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return WeatherNav;
+	}(_react2.default.Component);
+
+	exports.default = WeatherNav;
 
 /***/ }
 /******/ ]);

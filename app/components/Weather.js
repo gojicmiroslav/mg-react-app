@@ -2,6 +2,7 @@ import React from 'react';
 import WeatherForm from './WeatherForm';
 import WeatherMessage from './WeatherMessage';
 import openWeatherMap from '../api/openWeatherMap';
+import WeatherNav from './WeatherNav';
 
 class Weather extends React.Component {
 	constructor(props) {
@@ -60,16 +61,7 @@ class Weather extends React.Component {
 		return(
 			<div className="starter-template">				
 				<div className="card text-xs-center">
-  					<div className="card-header">
-    					<ul className="nav nav-tabs card-header-tabs float-xs-left">
-      						<li className="nav-item">
-        						<a className="nav-link active" href="#">Weather App</a>
-      						</li>
-      						<li className="nav-item">
-        						<a className="nav-link" href="#">City Examples</a>
-      						</li>
-    					</ul>
-  					</div>
+  					<WeatherNav />
   					<div className="card-block">
     					<h2 className="card-title">Weather Application API</h2>
     					

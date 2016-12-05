@@ -1,0 +1,21 @@
+{
+  "name": "react-app",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "gojicmiroslav <miroslav.gojic.78@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/gojicmiroslav/",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "bootstrap": "v4.0.0-alpha.5"
+  }
+}

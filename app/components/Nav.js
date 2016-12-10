@@ -9,18 +9,17 @@ class Nav extends React.Component {
 
 	onSearch(e){
 		e.preventDefault();
-		var location = this.refs.location.value;
-		console.log("Location: ", location);
-
+		var location = this.refs.search.value;
 		if(location.length > 0) {
-			this.refs.location.value = '';	
+			this.refs.search.value = '';	
+			let encodedLocation = encodeURIComponent(location);
+			window.location.hash = `#/?location=${encodedLocation}`;
 		}
-
 	}
 
-	render(){
+	render(){		
 		return (
-			<nav className="navbar navbar-static-top navbar-dark bg-primary">
+			<nav className="navbar navbar-static-top navbar-light" style={{backgroundColor: "#c7cdd1"}}>
 	    		<ul className="nav navbar-nav">
 	    			<li className="navbar-brand"><h4 className="font-weight-bold">ReactApp</h4></li>
 	      			<li className="nav-item">
@@ -34,9 +33,9 @@ class Nav extends React.Component {
 	      			</li>
 			    </ul>
 
-	    		<form className="form-inline float-xs-right" onSubmit={this.onSearch}>
-	      			<input className="form-control" type="search" placeholder="Search weather by city..." ref="location" />
-	      			<button className="btn btn-outline-secondary" type="submit">Get Weather</button>
+	    		<form className="form-inline float-xs-right nav-form" onSubmit={this.onSearch}>
+	      			<input className="form-control" ref="search" type="search" placeholder="Search weather by city..."/>
+	      			<button className="btn btn-outline-primary nav-form-btn" type="submit">Get Weather</button>
 	    		</form>
 	  		</nav>
 		);

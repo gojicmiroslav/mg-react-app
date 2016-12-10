@@ -15,9 +15,23 @@ class Weather extends React.Component {
 		this.handleSearch = this.handleSearch.bind(this);
 	}
 
+	componentDidMount() {
+		let location = this.props.location.query.location;
+		if(location && location.length > 0) {
+			this.handleSearch(location);
+			//reset the URL
+			window.location.hash = '#/';	
+		}
+	}
+
 	handleSearch(location){	
 		var self = this;
-		this.setState({ isLoading: true, errorMessage: undefined });
+		this.setState({ 
+			isLoading: true, 
+			errorMessage: undefined,
+			location: undefined,
+			temp: undefined
+		});
 
 		openWeatherMap.getTemperature(location)
 			.then(function(temperature) {
@@ -29,6 +43,16 @@ class Weather extends React.Component {
 			}, function(error) {
 				self.setState({ isLoading: false, errorMessage: error.message });
 			});
+	}
+
+	// called when components props are updated
+	componentWillReceiveProps(newProps) {
+		let location = newProps.location.query.location;
+		if(location && location.length > 0) {
+			this.handleSearch(location);
+			//reset the URL
+			window.location.hash = '#/';	
+		} 
 	}
 
 	render(){

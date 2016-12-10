@@ -26560,11 +26560,11 @@
 			key: 'onSearch',
 			value: function onSearch(e) {
 				e.preventDefault();
-				var location = this.refs.location.value;
-				console.log("Location: ", location);
-
+				var location = this.refs.search.value;
 				if (location.length > 0) {
-					this.refs.location.value = '';
+					this.refs.search.value = '';
+					var encodedLocation = encodeURIComponent(location);
+					window.location.hash = '#/?location=' + encodedLocation;
 				}
 			}
 		}, {
@@ -26572,7 +26572,7 @@
 			value: function render() {
 				return _react2.default.createElement(
 					'nav',
-					{ className: 'navbar navbar-static-top navbar-dark bg-primary' },
+					{ className: 'navbar navbar-static-top navbar-light', style: { backgroundColor: "#c7cdd1" } },
 					_react2.default.createElement(
 						'ul',
 						{ className: 'nav navbar-nav' },
@@ -26615,11 +26615,11 @@
 					),
 					_react2.default.createElement(
 						'form',
-						{ className: 'form-inline float-xs-right', onSubmit: this.onSearch },
-						_react2.default.createElement('input', { className: 'form-control', type: 'search', placeholder: 'Search weather by city...', ref: 'location' }),
+						{ className: 'form-inline float-xs-right nav-form', onSubmit: this.onSearch },
+						_react2.default.createElement('input', { className: 'form-control', ref: 'search', type: 'search', placeholder: 'Search weather by city...' }),
 						_react2.default.createElement(
 							'button',
-							{ className: 'btn btn-outline-secondary', type: 'submit' },
+							{ className: 'btn btn-outline-primary nav-form-btn', type: 'submit' },
 							'Get Weather'
 						)
 					)
@@ -26693,10 +26693,25 @@
 		}
 
 		_createClass(Weather, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				var location = this.props.location.query.location;
+				if (location && location.length > 0) {
+					this.handleSearch(location);
+					//reset the URL
+					window.location.hash = '#/';
+				}
+			}
+		}, {
 			key: 'handleSearch',
 			value: function handleSearch(location) {
 				var self = this;
-				this.setState({ isLoading: true, errorMessage: undefined });
+				this.setState({
+					isLoading: true,
+					errorMessage: undefined,
+					location: undefined,
+					temp: undefined
+				});
 
 				_openWeatherMap2.default.getTemperature(location).then(function (temperature) {
 					self.setState({
@@ -26707,6 +26722,19 @@
 				}, function (error) {
 					self.setState({ isLoading: false, errorMessage: error.message });
 				});
+			}
+
+			// called when components props are updated
+
+		}, {
+			key: 'componentWillReceiveProps',
+			value: function componentWillReceiveProps(newProps) {
+				var location = newProps.location.query.location;
+				if (location && location.length > 0) {
+					this.handleSearch(location);
+					//reset the URL
+					window.location.hash = '#/';
+				}
 			}
 		}, {
 			key: 'render',

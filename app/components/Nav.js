@@ -26,6 +26,12 @@ class Nav extends React.Component {
 	        			<IndexLink to="/" activeClassName="active" className="nav-link">Weather API</IndexLink>
 	      			</li>
 	      			<li className="nav-item">
+	        			<Link to="/timer" activeClassName="active" className="nav-link">Timer</Link>
+	      			</li>
+	      			<li className="nav-item">
+	        			<Link to="/countdown" activeClassName="active" className="nav-link">Countdown</Link>
+	      			</li>
+	      			<li className="nav-item">
 	        			<Link to="/about" activeClassName="active" className="nav-link">About</Link>
 	      			</li>
 	      			<li className="nav-item">

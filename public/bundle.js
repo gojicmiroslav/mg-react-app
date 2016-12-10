@@ -26616,7 +26616,7 @@
 					_react2.default.createElement(
 						'form',
 						{ className: 'form-inline float-xs-right', onSubmit: this.onSearch },
-						_react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'Enter city name...', ref: 'location' }),
+						_react2.default.createElement('input', { className: 'form-control', type: 'search', placeholder: 'Search weather by city...', ref: 'location' }),
 						_react2.default.createElement(
 							'button',
 							{ className: 'btn btn-outline-secondary', type: 'submit' },
@@ -26752,7 +26752,7 @@
 							{ className: 'card-block' },
 							_react2.default.createElement(
 								'h2',
-								{ className: 'card-title' },
+								{ className: 'card-title page-title' },
 								'Weather Application API'
 							),
 							_react2.default.createElement(_WeatherForm2.default, { handleSearch: this.handleSearch }),
@@ -26830,7 +26830,7 @@
 						_react2.default.createElement(
 							'div',
 							{ className: 'input-group input-group-lg' },
-							_react2.default.createElement('input', { type: 'text', ref: 'location', className: 'form-control', placeholder: 'Enter a city name...' }),
+							_react2.default.createElement('input', { type: 'text', ref: 'location', className: 'form-control', placeholder: 'Search weather by city...' }),
 							_react2.default.createElement(
 								'span',
 								{ className: 'input-group-btn' },

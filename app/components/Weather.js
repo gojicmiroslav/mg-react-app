@@ -57,7 +57,7 @@ class Weather extends React.Component {
 				<div className="card text-xs-center">
   					<WeatherNav />
   					<div className="card-block">
-    					<h2 className="card-title">Weather Application API</h2>
+    					<h2 className="card-title page-title">Weather Application API</h2>
     					
 						<WeatherForm handleSearch={this.handleSearch} />
 						{ renderMessage() }

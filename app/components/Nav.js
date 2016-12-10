@@ -35,7 +35,7 @@ class Nav extends React.Component {
 			    </ul>
 
 	    		<form className="form-inline float-xs-right" onSubmit={this.onSearch}>
-	      			<input className="form-control" type="text" placeholder="Enter city name..." ref="location" />
+	      			<input className="form-control" type="search" placeholder="Search weather by city..." ref="location" />
 	      			<button className="btn btn-outline-secondary" type="submit">Get Weather</button>
 	    		</form>
 	  		</nav>

@@ -5,7 +5,10 @@ module.exports = function(config){
 		browsers: ['Chrome'],
 		singleRun: true,
 		frameworks: ['mocha'],
-		files: ['test/**/*.test.js'],
+		files: [
+			'public/vendor/jquery/dist/jquery.js',
+			'test/**/*.test.js'
+		],
 		preprocessors: {
 			'test/**/*.test.js': ['webpack']
 		},

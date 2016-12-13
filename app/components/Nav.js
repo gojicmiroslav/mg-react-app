@@ -19,7 +19,7 @@ class Nav extends React.Component {
 
 	render(){		
 		return (
-			<nav className="navbar navbar-static-top navbar-light" style={{backgroundColor: "#c7cdd1"}}>
+			<nav className="navbar navbar-static-top navbar-dark" style={{backgroundColor: "#465762"}}>
 	    		<ul className="nav navbar-nav">
 	    			<li className="navbar-brand"><h4 className="font-weight-bold">ReactApp</h4></li>
 	      			<li className="nav-item">
@@ -41,7 +41,7 @@ class Nav extends React.Component {
 
 	    		<form className="form-inline float-xs-right nav-form" onSubmit={this.onSearch}>
 	      			<input className="form-control" ref="search" type="search" placeholder="Search weather by city..."/>
-	      			<button className="btn btn-outline-primary nav-form-btn" type="submit">Get Weather</button>
+	      			<button className="btn btn-outline-secondary nav-form-btn" type="submit">Get Weather</button>
 	    		</form>
 	  		</nav>
 		);

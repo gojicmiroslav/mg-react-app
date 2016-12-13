@@ -4,7 +4,7 @@ module.exports = function(config){
 	config.set({
 		browsers: ['Chrome'],
 		singleRun: true,
-		frameworks: ['mocha'],
+		frameworks: ['mocha', 'sinon'],
 		files: [
 			'public/vendor/jquery/dist/jquery.js',
 			'test/**/*.test.js'

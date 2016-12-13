@@ -26582,7 +26582,7 @@
 			value: function render() {
 				return _react2.default.createElement(
 					'nav',
-					{ className: 'navbar navbar-static-top navbar-light', style: { backgroundColor: "#c7cdd1" } },
+					{ className: 'navbar navbar-static-top navbar-dark', style: { backgroundColor: "#465762" } },
 					_react2.default.createElement(
 						'ul',
 						{ className: 'nav navbar-nav' },
@@ -26647,7 +26647,7 @@
 						_react2.default.createElement('input', { className: 'form-control', ref: 'search', type: 'search', placeholder: 'Search weather by city...' }),
 						_react2.default.createElement(
 							'button',
-							{ className: 'btn btn-outline-primary nav-form-btn', type: 'submit' },
+							{ className: 'btn btn-outline-secondary nav-form-btn', type: 'submit' },
 							'Get Weather'
 						)
 					)
@@ -28972,6 +28972,10 @@
 
 	var _Clock2 = _interopRequireDefault(_Clock);
 
+	var _CountdownForm = __webpack_require__(279);
+
+	var _CountdownForm2 = _interopRequireDefault(_CountdownForm);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28983,19 +28987,36 @@
 	var Countdown = function (_React$Component) {
 		_inherits(Countdown, _React$Component);
 
-		function Countdown() {
+		function Countdown(props) {
 			_classCallCheck(this, Countdown);
 
-			return _possibleConstructorReturn(this, (Countdown.__proto__ || Object.getPrototypeOf(Countdown)).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, (Countdown.__proto__ || Object.getPrototypeOf(Countdown)).call(this, props));
+
+			_this.state = { count: 0 };
+			_this.handleSetCountdown = _this.handleSetCountdown.bind(_this);
+			return _this;
 		}
 
 		_createClass(Countdown, [{
+			key: 'handleSetCountdown',
+			value: function handleSetCountdown(seconds) {
+				this.setState({ count: seconds });
+			}
+		}, {
 			key: 'render',
 			value: function render() {
+				var count = this.state.count;
+
+
 				return _react2.default.createElement(
 					'div',
-					null,
-					_react2.default.createElement(_Clock2.default, { totalSeconds: 129 })
+					{ className: 'row' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'col-sm-4 offset-sm-4 col-md-6 offset-md-3' },
+						_react2.default.createElement(_Clock2.default, { totalSeconds: count }),
+						_react2.default.createElement(_CountdownForm2.default, { onSetCountdown: this.handleSetCountdown })
+					)
 				);
 			}
 		}]);
@@ -29004,6 +29025,89 @@
 	}(_react2.default.Component);
 
 	exports.default = Countdown;
+
+/***/ },
+/* 279 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(7);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CountdownForm = function (_React$Component) {
+		_inherits(CountdownForm, _React$Component);
+
+		function CountdownForm(props) {
+			_classCallCheck(this, CountdownForm);
+
+			var _this = _possibleConstructorReturn(this, (CountdownForm.__proto__ || Object.getPrototypeOf(CountdownForm)).call(this, props));
+
+			_this.onSubmit = _this.onSubmit.bind(_this);
+			return _this;
+		}
+
+		_createClass(CountdownForm, [{
+			key: "onSubmit",
+			value: function onSubmit(e) {
+				e.preventDefault();
+				var strSeconds = this.refs.seconds.value;
+
+				if (strSeconds.match(/^[0-9]*$/)) {
+					this.refs.seconds.value = "";
+					this.props.onSetCountdown(parseInt(strSeconds, 10));
+				} else {
+					// TODO: show error message
+					this.refs.seconds.value = "";
+				}
+			}
+		}, {
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"div",
+					null,
+					_react2.default.createElement(
+						"form",
+						{ onSubmit: this.onSubmit, ref: "form", className: "countdown-form" },
+						_react2.default.createElement(
+							"div",
+							{ className: "form-group" },
+							_react2.default.createElement("input", { type: "text", ref: "seconds", className: "form-control", placeholder: "Enter time in seconds" })
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "form-group" },
+							_react2.default.createElement(
+								"button",
+								{ type: "submit", className: "btn btn-primary btn-block" },
+								"Start"
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return CountdownForm;
+	}(_react2.default.Component);
+
+	exports.default = CountdownForm;
 
 /***/ }
 /******/ ]);

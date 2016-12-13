@@ -6,6 +6,7 @@ class Timer extends React.Component {
 		return (
 			<h1>
 				<Clock/>
+				
 			</h1>
 		);
 	}

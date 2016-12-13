@@ -28984,6 +28984,11 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var status = {
+		STOPPED: 'stopped',
+		STARTED: 'started'
+	};
+
 	var Countdown = function (_React$Component) {
 		_inherits(Countdown, _React$Component);
 
@@ -28992,15 +28997,38 @@
 
 			var _this = _possibleConstructorReturn(this, (Countdown.__proto__ || Object.getPrototypeOf(Countdown)).call(this, props));
 
-			_this.state = { count: 0 };
+			_this.state = { count: 0, status: status.STOPPED };
 			_this.handleSetCountdown = _this.handleSetCountdown.bind(_this);
+			_this.startTimer = _this.startTimer.bind(_this);
 			return _this;
 		}
 
 		_createClass(Countdown, [{
+			key: 'componentDidUpdate',
+			value: function componentDidUpdate(prevProps, prevState) {
+				if (this.state.status !== prevState.status) {
+					switch (this.state.status) {
+						case status.STARTED:
+							this.startTimer();
+							break;
+					}
+				}
+			}
+		}, {
+			key: 'startTimer',
+			value: function startTimer() {
+				var _this2 = this;
+
+				this.timer = setInterval(function () {
+					var newCount = _this2.state.count - 1;
+					newCount = newCount >= 0 ? newCount : 0;
+					_this2.setState({ count: newCount });
+				}, 1000);
+			}
+		}, {
 			key: 'handleSetCountdown',
 			value: function handleSetCountdown(seconds) {
-				this.setState({ count: seconds });
+				this.setState({ count: seconds, status: status.STARTED });
 			}
 		}, {
 			key: 'render',

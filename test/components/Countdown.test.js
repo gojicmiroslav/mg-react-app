@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import chai, { expect } from 'chai';
 import $ from 'jquery';
+import status from '../../app/components/const'
 import sinonChai from 'sinon-chai';
 chai.use(sinonChai);
 
@@ -13,12 +14,7 @@ describe("Countdown", () => {
 		expect(Countdown).to.exist;
 	});
 
-	describe("handleSetCountdown", () => {
-		const status = {
-			STOPPED: 'stopped',
-			STARTED: 'started'
-		};
-
+	describe("handleSetCountdown", () => {		
 		let countdown;
 
 		beforeEach(() => {

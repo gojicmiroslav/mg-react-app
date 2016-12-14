@@ -28976,6 +28976,14 @@
 
 	var _CountdownForm2 = _interopRequireDefault(_CountdownForm);
 
+	var _const = __webpack_require__(280);
+
+	var _const2 = _interopRequireDefault(_const);
+
+	var _Controls = __webpack_require__(281);
+
+	var _Controls2 = _interopRequireDefault(_Controls);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28983,11 +28991,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var status = {
-		STOPPED: 'stopped',
-		STARTED: 'started'
-	};
 
 	var Countdown = function (_React$Component) {
 		_inherits(Countdown, _React$Component);
@@ -28997,7 +29000,7 @@
 
 			var _this = _possibleConstructorReturn(this, (Countdown.__proto__ || Object.getPrototypeOf(Countdown)).call(this, props));
 
-			_this.state = { count: 0, status: status.STOPPED };
+			_this.state = { count: 0, status: _const2.default.STOPPED };
 			_this.handleSetCountdown = _this.handleSetCountdown.bind(_this);
 			_this.startTimer = _this.startTimer.bind(_this);
 			return _this;
@@ -29008,7 +29011,7 @@
 			value: function componentDidUpdate(prevProps, prevState) {
 				if (this.state.status !== prevState.status) {
 					switch (this.state.status) {
-						case status.STARTED:
+						case _const2.default.STARTED:
 							this.startTimer();
 							break;
 					}
@@ -29028,7 +29031,7 @@
 		}, {
 			key: 'handleSetCountdown',
 			value: function handleSetCountdown(seconds) {
-				this.setState({ count: seconds, status: status.STARTED });
+				this.setState({ count: seconds, status: _const2.default.STARTED });
 			}
 		}, {
 			key: 'render',
@@ -29043,7 +29046,8 @@
 						'div',
 						{ className: 'col-sm-4 offset-sm-4 col-md-6 offset-md-3' },
 						_react2.default.createElement(_Clock2.default, { totalSeconds: count }),
-						_react2.default.createElement(_CountdownForm2.default, { onSetCountdown: this.handleSetCountdown })
+						_react2.default.createElement(_CountdownForm2.default, { onSetCountdown: this.handleSetCountdown }),
+						_react2.default.createElement(_Controls2.default, { countdownStatus: this.state.status })
 					)
 				);
 			}
@@ -29136,6 +29140,102 @@
 	}(_react2.default.Component);
 
 	exports.default = CountdownForm;
+
+/***/ },
+/* 280 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	var status = {
+		STOPPED: 'stopped',
+		STARTED: 'started',
+		PAUSED: 'paused'
+	};
+
+	exports.default = status;
+
+/***/ },
+/* 281 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(7);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _const = __webpack_require__(280);
+
+	var _const2 = _interopRequireDefault(_const);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Controls = function (_React$Component) {
+		_inherits(Controls, _React$Component);
+
+		function Controls() {
+			_classCallCheck(this, Controls);
+
+			return _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).apply(this, arguments));
+		}
+
+		_createClass(Controls, [{
+			key: 'render',
+			value: function render() {
+				var countdownStatus = this.props.countdownStatus;
+
+				var renderStartStopButton = function renderStartStopButton() {
+					if (countdownStatus === _const2.default.STARTED) {
+						return _react2.default.createElement(
+							'button',
+							{ className: 'btn btn-secondary' },
+							'Pause'
+						);
+					} else if (countdownStatus === _const2.default.PAUSED) {
+						return _react2.default.createElement(
+							'button',
+							{ className: 'btn btn-primary' },
+							'Start'
+						);
+					}
+				};
+
+				return _react2.default.createElement(
+					'div',
+					{ className: 'controls form-group' },
+					renderStartStopButton(),
+					_react2.default.createElement(
+						'button',
+						{ className: 'btn btn-danger' },
+						'Clear'
+					)
+				);
+			}
+		}]);
+
+		return Controls;
+	}(_react2.default.Component);
+
+	Controls.propTypes = {
+		countdownStatus: _react2.default.PropTypes.string.isRequired
+	};
+	exports.default = Controls;
 
 /***/ }
 /******/ ]);

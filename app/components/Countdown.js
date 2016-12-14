@@ -1,11 +1,8 @@
 import React from 'react';
 import Clock from './Clock';
 import CountdownForm from './CountdownForm';
-
-const status = {
-	STOPPED: 'stopped',
-	STARTED: 'started'
-};
+import status from './const'
+import Controls from './Controls'
 
 class Countdown extends React.Component {
 	constructor(props) {
@@ -45,6 +42,7 @@ class Countdown extends React.Component {
 				<div className="col-sm-4 offset-sm-4 col-md-6 offset-md-3">
 					<Clock totalSeconds={count}/>
 					<CountdownForm onSetCountdown={this.handleSetCountdown} />
+					<Controls countdownStatus={this.state.status}/>
 				</div>
 			</div>
 		);

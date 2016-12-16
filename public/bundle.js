@@ -29030,6 +29030,12 @@
 				}
 			}
 		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				clearInterval(this.timer);
+				this.timer = undefined;
+			}
+		}, {
 			key: 'startTimer',
 			value: function startTimer() {
 				var _this2 = this;
@@ -29038,6 +29044,10 @@
 					var newCount = _this2.state.count - 1;
 					newCount = newCount >= 0 ? newCount : 0;
 					_this2.setState({ count: newCount });
+
+					if (newCount === 0) {
+						_this2.setState({ countdownStatus: _const2.default.STOPPED });
+					}
 				}, 1000);
 			}
 		}, {

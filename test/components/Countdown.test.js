@@ -25,7 +25,7 @@ describe("Countdown", () => {
 			countdown.handleSetCountdown(10);
 
 			expect(countdown.state.count).to.equal(10);
-			expect(countdown.state.status).to.equal(status.STARTED);
+			expect(countdown.state.countdownStatus).to.equal(status.STARTED);
 
 			// after a one second state.count should be 9
 			setTimeout(() => {
@@ -41,6 +41,28 @@ describe("Countdown", () => {
 				expect(countdown.state.count).to.equal(0);
 				done();
 			},2001);
+		});
+
+		it('should pause countdown on paused status', (done) => {
+			countdown.handleSetCountdown(3);
+			countdown.handleStatusChange(status.PAUSED);
+
+			setTimeout(() => {
+				expect(countdown.state.count).to.equal(3);
+				expect(countdown.state.countdownStatus).to.equal(status.PAUSED);
+				done();
+			}, 1001);
+		});
+
+		it('should reset count on stopped', (done) => {
+			countdown.handleSetCountdown(3);
+			countdown.handleStatusChange(status.STOPPED);
+
+			setTimeout(() => {
+				expect(countdown.state.count).to.equal(0);
+				expect(countdown.state.countdownStatus).to.equal(status.STOPPED);
+				done();
+			}, 1001);
 		});
 	});
 });

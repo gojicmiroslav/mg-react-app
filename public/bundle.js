@@ -29092,6 +29092,11 @@
 					_react2.default.createElement(
 						'div',
 						{ className: 'col-sm-4 offset-sm-4 col-md-6 offset-md-3' },
+						_react2.default.createElement(
+							'h1',
+							{ className: 'page-title' },
+							'Countdown App'
+						),
 						_react2.default.createElement(_Clock2.default, { totalSeconds: count }),
 						renderControlsArea()
 					)

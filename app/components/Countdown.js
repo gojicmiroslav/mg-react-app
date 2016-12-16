@@ -80,6 +80,7 @@ class Countdown extends React.Component {
 		return (
 			<div className="row">
 				<div className="col-sm-4 offset-sm-4 col-md-6 offset-md-3">
+					<h1 className="page-title">Countdown App</h1>
 					<Clock totalSeconds={count}/>				
 					{renderControlsArea()}
 				</div>

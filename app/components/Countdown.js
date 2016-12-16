@@ -7,16 +7,28 @@ import Controls from './Controls'
 class Countdown extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { count: 0, status: status.STOPPED };
+		this.state = { 
+			count: 0, 
+			countdownStatus: status.STOPPED 
+		};
 		this.handleSetCountdown = this.handleSetCountdown.bind(this);
-		this.startTimer = this.startTimer.bind(this);
+		this.handleStatusChange = this.handleStatusChange.bind(this);
 	}
 
-	componentDidUpdate(prevProps, prevState) {
-		if(this.state.status !== prevState.status){
-			switch(this.state.status){
+	componentDidUpdate(prevProps, prevState) {		
+		if(this.state.countdownStatus !== prevState.countdownStatus){
+			switch(this.state.countdownStatus){
 				case status.STARTED:
 					this.startTimer();
+					break;
+				case status.STOPPED:
+					this.setState({ count: 0 });
+					clearInterval(this.timer);
+					this.timer = undefined;
+					break;
+				case status.PAUSED:
+					clearInterval(this.timer);
+					this.timer = undefined;
 					break;
 			}
 		}
@@ -31,18 +43,36 @@ class Countdown extends React.Component {
 	}
 
 	handleSetCountdown(seconds){
-		this.setState({ count: seconds, status: status.STARTED });
+		this.setState({ 
+			count: seconds, 
+			countdownStatus: status.STARTED 
+		});
+	}
+
+	handleStatusChange(newStatus){
+		this.setState({
+			countdownStatus: newStatus
+		});
 	}
 
 	render(){
-		let { count } = this.state;
+		let { count, countdownStatus } = this.state;
+
+		let renderControlsArea = () => {
+			if(countdownStatus === status.STOPPED){ 
+				return <CountdownForm onSetCountdown={this.handleSetCountdown} />
+			} else { // status == start || pause
+				return <Controls 
+							countdownStatus={countdownStatus} 
+							onStatusChange={this.handleStatusChange} />
+			}
+		};
 
 		return (
 			<div className="row">
 				<div className="col-sm-4 offset-sm-4 col-md-6 offset-md-3">
-					<Clock totalSeconds={count}/>
-					<CountdownForm onSetCountdown={this.handleSetCountdown} />
-					<Controls countdownStatus={this.state.status}/>
+					<Clock totalSeconds={count}/>				
+					{renderControlsArea()}
 				</div>
 			</div>
 		);

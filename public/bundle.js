@@ -29000,19 +29000,31 @@
 
 			var _this = _possibleConstructorReturn(this, (Countdown.__proto__ || Object.getPrototypeOf(Countdown)).call(this, props));
 
-			_this.state = { count: 0, status: _const2.default.STOPPED };
+			_this.state = {
+				count: 0,
+				countdownStatus: _const2.default.STOPPED
+			};
 			_this.handleSetCountdown = _this.handleSetCountdown.bind(_this);
-			_this.startTimer = _this.startTimer.bind(_this);
+			_this.handleStatusChange = _this.handleStatusChange.bind(_this);
 			return _this;
 		}
 
 		_createClass(Countdown, [{
 			key: 'componentDidUpdate',
 			value: function componentDidUpdate(prevProps, prevState) {
-				if (this.state.status !== prevState.status) {
-					switch (this.state.status) {
+				if (this.state.countdownStatus !== prevState.countdownStatus) {
+					switch (this.state.countdownStatus) {
 						case _const2.default.STARTED:
 							this.startTimer();
+							break;
+						case _const2.default.STOPPED:
+							this.setState({ count: 0 });
+							clearInterval(this.timer);
+							this.timer = undefined;
+							break;
+						case _const2.default.PAUSED:
+							clearInterval(this.timer);
+							this.timer = undefined;
 							break;
 					}
 				}
@@ -29031,13 +29043,38 @@
 		}, {
 			key: 'handleSetCountdown',
 			value: function handleSetCountdown(seconds) {
-				this.setState({ count: seconds, status: _const2.default.STARTED });
+				this.setState({
+					count: seconds,
+					countdownStatus: _const2.default.STARTED
+				});
+			}
+		}, {
+			key: 'handleStatusChange',
+			value: function handleStatusChange(newStatus) {
+				this.setState({
+					countdownStatus: newStatus
+				});
 			}
 		}, {
 			key: 'render',
 			value: function render() {
-				var count = this.state.count;
+				var _this3 = this;
 
+				var _state = this.state,
+				    count = _state.count,
+				    countdownStatus = _state.countdownStatus;
+
+
+				var renderControlsArea = function renderControlsArea() {
+					if (countdownStatus === _const2.default.STOPPED) {
+						return _react2.default.createElement(_CountdownForm2.default, { onSetCountdown: _this3.handleSetCountdown });
+					} else {
+						// status == start || pause
+						return _react2.default.createElement(_Controls2.default, {
+							countdownStatus: countdownStatus,
+							onStatusChange: _this3.handleStatusChange });
+					}
+				};
 
 				return _react2.default.createElement(
 					'div',
@@ -29046,8 +29083,7 @@
 						'div',
 						{ className: 'col-sm-4 offset-sm-4 col-md-6 offset-md-3' },
 						_react2.default.createElement(_Clock2.default, { totalSeconds: count }),
-						_react2.default.createElement(_CountdownForm2.default, { onSetCountdown: this.handleSetCountdown }),
-						_react2.default.createElement(_Controls2.default, { countdownStatus: this.state.status })
+						renderControlsArea()
 					)
 				);
 			}
@@ -29189,28 +29225,42 @@
 	var Controls = function (_React$Component) {
 		_inherits(Controls, _React$Component);
 
-		function Controls() {
+		function Controls(props) {
 			_classCallCheck(this, Controls);
 
-			return _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).apply(this, arguments));
+			return _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).call(this, props));
 		}
 
 		_createClass(Controls, [{
+			key: 'onStatusChange',
+			value: function onStatusChange(newStatus) {
+				var _this2 = this;
+
+				return function (e) {
+					_this2.props.onStatusChange(newStatus);
+				};
+			}
+		}, {
 			key: 'render',
 			value: function render() {
+				var _this3 = this;
+
 				var countdownStatus = this.props.countdownStatus;
+
 
 				var renderStartStopButton = function renderStartStopButton() {
 					if (countdownStatus === _const2.default.STARTED) {
 						return _react2.default.createElement(
 							'button',
-							{ className: 'btn btn-secondary' },
+							{ className: 'btn btn-secondary',
+								onClick: _this3.onStatusChange(_const2.default.PAUSED) },
 							'Pause'
 						);
 					} else if (countdownStatus === _const2.default.PAUSED) {
 						return _react2.default.createElement(
 							'button',
-							{ className: 'btn btn-primary' },
+							{ className: 'btn btn-primary',
+								onClick: _this3.onStatusChange(_const2.default.STARTED) },
 							'Start'
 						);
 					}
@@ -29222,7 +29272,8 @@
 					renderStartStopButton(),
 					_react2.default.createElement(
 						'button',
-						{ className: 'btn btn-danger' },
+						{ className: 'btn btn-danger',
+							onClick: this.onStatusChange(_const2.default.STOPPED) },
 						'Clear'
 					)
 				);
@@ -29233,7 +29284,8 @@
 	}(_react2.default.Component);
 
 	Controls.propTypes = {
-		countdownStatus: _react2.default.PropTypes.string.isRequired
+		countdownStatus: _react2.default.PropTypes.string.isRequired,
+		onStatusChange: _react2.default.PropTypes.func.isRequired
 	};
 	exports.default = Controls;
 

@@ -8,6 +8,7 @@ import Contact from './components/Contact';
 import Examples from './components/Examples';
 import Timer from './components/Timer';
 import Countdown from './components/Countdown';
+import Todo from './components/Todo';
 
 ReactDOM.render(
 	<Router history={hashHistory}>
@@ -18,6 +19,7 @@ ReactDOM.render(
 			<Route path="/countdown" component={Countdown} />
 			<Route path="/contact" component={Contact} />
 			<Route path="/examples" component={Examples} />
+			<Route path="/todo" component={Todo} />
 		</Route>
 	</Router>, 
 	document.getElementById("app")

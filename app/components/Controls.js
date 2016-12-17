@@ -24,7 +24,7 @@ class Controls extends React.Component {
 			if(countdownStatus === status.STARTED){
 				return <button className="btn btn-secondary" 
 								onClick={this.onStatusChange(status.PAUSED)}>Pause</button>	
-			} else if(countdownStatus === status.PAUSED){
+			} else {
 				return <button className="btn btn-primary"
 								onClick={this.onStatusChange(status.STARTED)}>Start</button>	
 			}

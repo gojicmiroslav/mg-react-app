@@ -29412,6 +29412,10 @@
 
 	var _TodoList2 = _interopRequireDefault(_TodoList);
 
+	var _AddTodo = __webpack_require__(285);
+
+	var _AddTodo2 = _interopRequireDefault(_AddTodo);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29435,6 +29439,11 @@
 		}
 
 		_createClass(Todo, [{
+			key: 'handleAddTodo',
+			value: function handleAddTodo(text) {
+				console.log("New Todo", text);
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				var todos = this.state.todos;
@@ -29442,8 +29451,13 @@
 
 				return _react2.default.createElement(
 					'div',
-					null,
-					_react2.default.createElement(_TodoList2.default, { todos: todos })
+					{ className: 'row' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'col-sm-4 offset-sm-4 col-md-6 offset-md-3' },
+						_react2.default.createElement(_TodoList2.default, { todos: todos }),
+						_react2.default.createElement(_AddTodo2.default, { handleAddTodo: this.handleAddTodo })
+					)
 				);
 			}
 		}]);
@@ -29570,6 +29584,88 @@
 	}(_react2.default.Component);
 
 	exports.default = TodoItem;
+
+/***/ },
+/* 285 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(7);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var AddTodo = function (_React$Component) {
+		_inherits(AddTodo, _React$Component);
+
+		function AddTodo(props) {
+			_classCallCheck(this, AddTodo);
+
+			var _this = _possibleConstructorReturn(this, (AddTodo.__proto__ || Object.getPrototypeOf(AddTodo)).call(this, props));
+
+			_this.onSubmit = _this.onSubmit.bind(_this);
+			return _this;
+		}
+
+		_createClass(AddTodo, [{
+			key: "onSubmit",
+			value: function onSubmit(e) {
+				e.preventDefault();
+				var todo = this.refs.todo.value;
+
+				if (todo.length > 0) {
+					this.props.handleAddTodo(todo);
+				}
+
+				this.refs.todo.value = "";
+				this.refs.todo.focus();
+			}
+		}, {
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"div",
+					null,
+					_react2.default.createElement(
+						"form",
+						{ onSubmit: this.onSubmit, ref: "form" },
+						_react2.default.createElement(
+							"div",
+							{ className: "form-group" },
+							_react2.default.createElement("input", { type: "text", placeholder: "Add Todo...", ref: "todo", className: "form-control" })
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "form-group" },
+							_react2.default.createElement(
+								"button",
+								{ type: "submit", className: "btn btn-primary btn-block" },
+								"Add Todo"
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return AddTodo;
+	}(_react2.default.Component);
+
+	exports.default = AddTodo;
 
 /***/ }
 /******/ ]);

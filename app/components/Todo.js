@@ -11,19 +11,20 @@ class Todo extends React.Component {
 			showCompleted: false,
 			searchText: "",
 			todos: [
-				{ id: uuid(), text: "Go to store"},
-				{ id: uuid(), text: "Go to sleep"},
-				{ id: uuid(), text: "Drink a coofee"},
-				{ id: uuid(), text: "Another Todo"}
+				{ id: uuid(), text: "Go to store", completed: true},
+				{ id: uuid(), text: "Go to sleep", completed: false},
+				{ id: uuid(), text: "Drink a coofee", completed: true},
+				{ id: uuid(), text: "Another Todo", completed: false}
 			]
 		};
 
 		this.handleSearch = this.handleSearch.bind(this);
 		this.handleAddTodo = this.handleAddTodo.bind(this);
+		this.handleToggle = this.handleToggle.bind(this);
 	}
 
 	handleAddTodo(text){
-		this.setState({ todos: [...this.state.todos, { id: uuid() , text: text }] })
+		this.setState({ todos: [...this.state.todos, { id: uuid(), text: text, completed: false }] })
 	}
 
 	handleSearch(showCompleted, searchText){
@@ -33,6 +34,18 @@ class Todo extends React.Component {
 		});		
 	}
 
+	handleToggle(id){
+		let updatedTodos = this.state.todos.map((item) => {
+			if(item.id === id){
+				item.completed = !item.completed;
+			}
+
+			return item;
+		});
+
+		this.setState({ todos: updatedTodos });
+	}
+
 	render(){
 		let { todos } = this.state;
 
@@ -40,7 +53,7 @@ class Todo extends React.Component {
 			<div className="row">
 				<div className="col-sm-4 offset-sm-4 col-md-6 offset-md-3">
 					<TodoSearch onSearch={this.handleSearch}/>
-					<TodoList todos={todos} />
+					<TodoList todos={todos} onToggle={this.handleToggle} />
 					<AddTodo handleAddTodo={this.handleAddTodo} />
 				</div>
 			</div>

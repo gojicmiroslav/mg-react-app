@@ -1,12 +1,22 @@
 import React from 'react';
 
 class TodoItem extends React.Component {
+	constructor(props) {
+		super(props);
+		this.handleChange = this.handleChange.bind(this);
+	}
+
+	handleChange(e){
+		
+	}
+
 	render(){
-		let todo = this.props;
+		let { id, text, completed } = this.props;
 
 		return (
-			<div>
-				{todo.id}: {todo.text}
+			<div onClick={event => this.props.onToggle(id)}>
+				<input type="checkbox" checked={completed} onChange={this.handleChange} ref="completed"/>
+				{text}
 			</div>
 		);
 	}

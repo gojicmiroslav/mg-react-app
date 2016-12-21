@@ -29445,18 +29445,19 @@
 			_this.state = {
 				showCompleted: false,
 				searchText: "",
-				todos: [{ id: (0, _uuid2.default)(), text: "Go to store" }, { id: (0, _uuid2.default)(), text: "Go to sleep" }, { id: (0, _uuid2.default)(), text: "Drink a coofee" }, { id: (0, _uuid2.default)(), text: "Another Todo" }]
+				todos: [{ id: (0, _uuid2.default)(), text: "Go to store", completed: true }, { id: (0, _uuid2.default)(), text: "Go to sleep", completed: false }, { id: (0, _uuid2.default)(), text: "Drink a coofee", completed: true }, { id: (0, _uuid2.default)(), text: "Another Todo", completed: false }]
 			};
 
 			_this.handleSearch = _this.handleSearch.bind(_this);
 			_this.handleAddTodo = _this.handleAddTodo.bind(_this);
+			_this.handleToggle = _this.handleToggle.bind(_this);
 			return _this;
 		}
 
 		_createClass(Todo, [{
 			key: 'handleAddTodo',
 			value: function handleAddTodo(text) {
-				this.setState({ todos: [].concat(_toConsumableArray(this.state.todos), [{ id: (0, _uuid2.default)(), text: text }]) });
+				this.setState({ todos: [].concat(_toConsumableArray(this.state.todos), [{ id: (0, _uuid2.default)(), text: text, completed: false }]) });
 			}
 		}, {
 			key: 'handleSearch',
@@ -29465,6 +29466,19 @@
 					showCompleted: showCompleted,
 					searchText: searchText.toLowerCase()
 				});
+			}
+		}, {
+			key: 'handleToggle',
+			value: function handleToggle(id) {
+				var updatedTodos = this.state.todos.map(function (item) {
+					if (item.id === id) {
+						item.completed = !item.completed;
+					}
+
+					return item;
+				});
+
+				this.setState({ todos: updatedTodos });
 			}
 		}, {
 			key: 'render',
@@ -29479,7 +29493,7 @@
 						'div',
 						{ className: 'col-sm-4 offset-sm-4 col-md-6 offset-md-3' },
 						_react2.default.createElement(_TodoSearch2.default, { onSearch: this.handleSearch }),
-						_react2.default.createElement(_TodoList2.default, { todos: todos }),
+						_react2.default.createElement(_TodoList2.default, { todos: todos, onToggle: this.handleToggle }),
 						_react2.default.createElement(_AddTodo2.default, { handleAddTodo: this.handleAddTodo })
 					)
 				);
@@ -29533,12 +29547,14 @@
 		_createClass(TodoList, [{
 			key: 'render',
 			value: function render() {
+				var _this2 = this;
+
 				var todos = this.props.todos;
 
 
 				var renderTodoItems = function renderTodoItems() {
 					return todos.map(function (todo) {
-						return _react2.default.createElement(_TodoItem2.default, _extends({ key: todo.id }, todo));
+						return _react2.default.createElement(_TodoItem2.default, _extends({ key: todo.id }, todo, { onToggle: _this2.props.onToggle }));
 					});
 				};
 
@@ -29559,7 +29575,7 @@
 /* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -29582,23 +29598,36 @@
 	var TodoItem = function (_React$Component) {
 		_inherits(TodoItem, _React$Component);
 
-		function TodoItem() {
+		function TodoItem(props) {
 			_classCallCheck(this, TodoItem);
 
-			return _possibleConstructorReturn(this, (TodoItem.__proto__ || Object.getPrototypeOf(TodoItem)).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, (TodoItem.__proto__ || Object.getPrototypeOf(TodoItem)).call(this, props));
+
+			_this.handleChange = _this.handleChange.bind(_this);
+			return _this;
 		}
 
 		_createClass(TodoItem, [{
-			key: 'render',
+			key: "handleChange",
+			value: function handleChange(e) {}
+		}, {
+			key: "render",
 			value: function render() {
-				var todo = this.props;
+				var _this2 = this;
+
+				var _props = this.props,
+				    id = _props.id,
+				    text = _props.text,
+				    completed = _props.completed;
+
 
 				return _react2.default.createElement(
-					'div',
-					null,
-					todo.id,
-					': ',
-					todo.text
+					"div",
+					{ onClick: function onClick(event) {
+							return _this2.props.onToggle(id);
+						} },
+					_react2.default.createElement("input", { type: "checkbox", checked: completed, onChange: this.handleChange, ref: "completed" }),
+					text
 				);
 			}
 		}]);

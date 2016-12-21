@@ -29424,6 +29424,10 @@
 
 	var _uuid2 = _interopRequireDefault(_uuid);
 
+	var _TodoAPI = __webpack_require__(293);
+
+	var _TodoAPI2 = _interopRequireDefault(_TodoAPI);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -29445,7 +29449,7 @@
 			_this.state = {
 				showCompleted: false,
 				searchText: "",
-				todos: [{ id: (0, _uuid2.default)(), text: "Go to store", completed: true }, { id: (0, _uuid2.default)(), text: "Go to sleep", completed: false }, { id: (0, _uuid2.default)(), text: "Drink a coofee", completed: true }, { id: (0, _uuid2.default)(), text: "Another Todo", completed: false }]
+				todos: _TodoAPI2.default.getTodos()
 			};
 
 			_this.handleSearch = _this.handleSearch.bind(_this);
@@ -29455,6 +29459,11 @@
 		}
 
 		_createClass(Todo, [{
+			key: 'componentDidUpdate',
+			value: function componentDidUpdate() {
+				_TodoAPI2.default.setTodos(this.state.todos);
+			}
+		}, {
 			key: 'handleAddTodo',
 			value: function handleAddTodo(text) {
 				this.setState({ todos: [].concat(_toConsumableArray(this.state.todos), [{ id: (0, _uuid2.default)(), text: text, completed: false }]) });
@@ -30025,6 +30034,43 @@
 
 	module.exports = v4;
 
+
+/***/ },
+/* 292 */,
+/* 293 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _jquery = __webpack_require__(272);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+		setTodos: function setTodos(todos) {
+			if (_jquery2.default.isArray(todos)) {
+				localStorage.setItem('todos', JSON.stringify(todos));
+				return todos;
+			}
+		},
+
+		getTodos: function getTodos() {
+			var stringTodos = localStorage.getItem('todos');
+			var todos = [];
+
+			try {
+				todos = JSON.parse(stringTodos);
+			} catch (e) {}
+
+			return _jquery2.default.isArray(todos) ? todos : [];
+		}
+	};
 
 /***/ }
 /******/ ]);

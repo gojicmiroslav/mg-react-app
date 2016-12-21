@@ -3,6 +3,7 @@ import TodoList from './TodoList';
 import AddTodo from'./AddTodo';
 import TodoSearch from './TodoSearch';
 import uuid from 'uuid';
+import TodoAPI from '../api/TodoAPI';
 
 class Todo extends React.Component {
 	constructor(props) {
@@ -10,17 +11,16 @@ class Todo extends React.Component {
 		this.state = {
 			showCompleted: false,
 			searchText: "",
-			todos: [
-				{ id: uuid(), text: "Go to store", completed: true},
-				{ id: uuid(), text: "Go to sleep", completed: false},
-				{ id: uuid(), text: "Drink a coofee", completed: true},
-				{ id: uuid(), text: "Another Todo", completed: false}
-			]
+			todos: TodoAPI.getTodos()
 		};
 
 		this.handleSearch = this.handleSearch.bind(this);
 		this.handleAddTodo = this.handleAddTodo.bind(this);
 		this.handleToggle = this.handleToggle.bind(this);
+	}
+
+	componentDidUpdate(){
+		TodoAPI.setTodos(this.state.todos);
 	}
 
 	handleAddTodo(text){

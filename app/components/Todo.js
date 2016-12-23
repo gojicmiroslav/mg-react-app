@@ -4,6 +4,7 @@ import AddTodo from'./AddTodo';
 import TodoSearch from './TodoSearch';
 import uuid from 'uuid';
 import TodoAPI from '../api/TodoAPI';
+import moment from 'moment';
 
 class Todo extends React.Component {
 	constructor(props) {
@@ -24,7 +25,14 @@ class Todo extends React.Component {
 	}
 
 	handleAddTodo(text){
-		this.setState({ todos: [...this.state.todos, { id: uuid(), text: text, completed: false }] })
+		this.setState({ 
+			todos: [...this.state.todos, { 
+				id: uuid(), text: text, 
+				completed: false, 
+				created_at: moment().unix(),
+				completed_at: undefined 
+			}] 
+		});
 	}
 
 	handleSearch(showCompleted, searchText){
@@ -38,6 +46,7 @@ class Todo extends React.Component {
 		let updatedTodos = this.state.todos.map((item) => {
 			if(item.id === id){
 				item.completed = !item.completed;
+				item.completed_at = item.completed ? moment().unix() : undefined;
 			}
 
 			return item;
@@ -47,7 +56,7 @@ class Todo extends React.Component {
 	}
 
 	render(){
-		let { todos, showCompleted, searchText } = this.state;
+		let { todos, showCompleted, searchText, created_at } = this.state;
 		let filteredTodos = TodoAPI.filterTodos(todos, showCompleted, searchText);
 
 		return(

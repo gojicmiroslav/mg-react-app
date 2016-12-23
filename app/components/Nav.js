@@ -32,7 +32,7 @@ class Nav extends React.Component {
 	        			<Link to="/countdown" activeClassName="active" className="nav-link">Countdown</Link>
 	      			</li>
 	      			<li className="nav-item">
-	        			<Link to="/todo" activeClassName="active" className="nav-link">Todo</Link>
+	        			<Link to="/todo" activeClassName="active" className="nav-link">Todo App</Link>
 	      			</li>
 	      			<li className="nav-item">
 	        			<Link to="/about" activeClassName="active" className="nav-link">About</Link>

@@ -26633,7 +26633,7 @@
 							_react2.default.createElement(
 								_reactRouter.Link,
 								{ to: '/todo', activeClassName: 'active', className: 'nav-link' },
-								'Todo'
+								'Todo App'
 							)
 						),
 						_react2.default.createElement(
@@ -29424,7 +29424,7 @@
 
 	var _uuid2 = _interopRequireDefault(_uuid);
 
-	var _TodoAPI = __webpack_require__(293);
+	var _TodoAPI = __webpack_require__(292);
 
 	var _TodoAPI2 = _interopRequireDefault(_TodoAPI);
 
@@ -29492,8 +29492,12 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				var todos = this.state.todos;
+				var _state = this.state,
+				    todos = _state.todos,
+				    showCompleted = _state.showCompleted,
+				    searchText = _state.searchText;
 
+				var filteredTodos = _TodoAPI2.default.filterTodos(todos, showCompleted, searchText);
 
 				return _react2.default.createElement(
 					'div',
@@ -29502,7 +29506,7 @@
 						'div',
 						{ className: 'col-sm-4 offset-sm-4 col-md-6 offset-md-3' },
 						_react2.default.createElement(_TodoSearch2.default, { onSearch: this.handleSearch }),
-						_react2.default.createElement(_TodoList2.default, { todos: todos, onToggle: this.handleToggle }),
+						_react2.default.createElement(_TodoList2.default, { todos: filteredTodos, onToggle: this.handleToggle }),
 						_react2.default.createElement(_AddTodo2.default, { handleAddTodo: this.handleAddTodo })
 					)
 				);
@@ -30036,8 +30040,7 @@
 
 
 /***/ },
-/* 292 */,
-/* 293 */
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30069,6 +30072,34 @@
 			} catch (e) {}
 
 			return _jquery2.default.isArray(todos) ? todos : [];
+		},
+
+		filterTodos: function filterTodos(todos, showCompleted, searchText) {
+			var filteredTodos = todos;
+
+			// Filter by showCompleted
+			filteredTodos = filteredTodos.filter(function (todo) {
+				return !todo.completed || showCompleted;
+			});
+
+			// Filter by searchText
+			filteredTodos = filteredTodos.filter(function (todo) {
+				var text = todo.text.toLowerCase();
+				return searchText.length === 0 || text.indexOf(searchText.toLowerCase()) > -1;
+			});
+
+			// Sort todos with non-completed first
+			filteredTodos.sort(function (a, b) {
+				if (!a.completed && b.completed) {
+					return -1;
+				} else if (a.completed && !b.completed) {
+					return 1;
+				} else {
+					return 0;
+				}
+			});
+
+			return filteredTodos;
 		}
 	};
 
